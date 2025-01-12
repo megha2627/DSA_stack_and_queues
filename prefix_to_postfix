@@ -1,0 +1,47 @@
+You are given a string that represents the prefix form of a valid mathematical expression. Convert it to its postfix form.
+
+
+
+
+// User function Template for Java
+
+class Solution {
+    static String preToPost(String pre_exp) {
+        StringBuilder s1=new StringBuilder(pre_exp);
+        StringBuilder s3=new StringBuilder();
+        StringBuilder s4=new StringBuilder();
+        s1.reverse();
+        s1.toString();
+        int i=0;
+        
+        Stack<String> s2=new Stack<>();
+        int n=s1.length();
+        while(i<n){
+            StringBuilder si = new StringBuilder();
+            if((s1.charAt(i)>='a' && s1.charAt(i)<='z') || (s1.charAt(i)>='A' && s1.charAt(i)<='Z'))
+            {
+                s2.push(String.valueOf(s1.charAt(i)));
+            }
+            else{
+                int count=0;
+                while(count<2 && !s2.isEmpty()){
+                   si.append(s2.peek());
+                   s2.pop();
+                   count=count+1;
+                }
+                si.append(s1.charAt(i));
+               
+                
+                
+                s2.push(String.valueOf(si));
+                 
+            }
+             i++;
+            
+        }
+         return s2.pop();
+        
+
+        // code here=new S
+    }
+}

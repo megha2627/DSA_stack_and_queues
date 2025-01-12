@@ -1,0 +1,58 @@
+You are given a string that represents the postfix form of a valid mathematical expression. Convert it to its prefix form.
+
+
+
+
+// User function Template for Java
+
+class Solution {
+    static String postToPre(String post_exp) {
+        
+        // code here
+         
+        StringBuilder s3=new StringBuilder();
+        StringBuilder s4=new StringBuilder();
+        
+       
+        int i=0;
+        String s1=post_exp;
+        
+        Stack<String> s2=new Stack<>();
+        int n=s1.length();
+        while(i<n){
+            StringBuilder si = new StringBuilder();
+            if((s1.charAt(i)>='a' && s1.charAt(i)<='z') || (s1.charAt(i)>='A' && s1.charAt(i)<='Z'))
+            {
+                s2.push(String.valueOf(s1.charAt(i)));
+            }
+            else{
+                int count=0;
+                 si.append(s1.charAt(i));
+                String sii="";
+                while(count<2 && !s2.isEmpty()){
+                    
+                  if(count==0){
+                     sii=s2.peek();
+                    
+                } 
+                else{
+                     si.append(s2.peek());
+                }
+                   s2.pop();
+                   count=count+1;
+                }
+                si.append(sii);
+               
+                
+                
+                s2.push(String.valueOf(si));
+                 
+            }
+             i++;
+            
+        }
+         return s2.pop();
+        
+
+    }
+}

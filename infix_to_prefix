@@ -1,0 +1,120 @@
+Given an infix expression in the form of string s. Convert this infix expression to a postfix expression.
+
+Infix expression: The expression of the form a op b. When an operator is in between every pair of operands.
+Postfix expression: The expression of the form a b op. When an operator is followed for every pair of operands.
+Note: The order of precedence is: ^ greater than * equals to / greater than + equals to -. Ignore the right associativity of ^.
+
+
+lass Solution {
+    // Function to convert an infix expression to a postfix expression.
+   public static String infixToPostfix(String exp) {
+        // Your code here
+        int i = 0;
+        Stack<Character> s = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        while (i < exp.length()) {
+            char c = exp.charAt(i);
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
+                sb.append(c);
+            } else if (c == '(') {
+                s.push(c);
+            } else if (c == ')') {
+                while (!s.isEmpty() && s.peek() != '(') {
+                    sb.append(s.pop());
+                }
+                if(!s.isEmpty()) s.pop();
+            } else {
+                if (s.isEmpty() || orderOfPrecedence(c) > orderOfPrecedence(s.peek())) {
+                    s.push(c);
+                } else {
+                    while (!s.isEmpty() && orderOfPrecedence(c) <= orderOfPrecedence(s.peek())) {
+                        sb.append(s.pop());
+                    }
+                    s.push(c);
+                }
+            }
+            i++;
+        }
+        while(!s.isEmpty()) sb.append(s.pop());
+        return sb.toString();
+    }
+
+    private static int orderOfPrecedence(char c) {
+        switch (c) {
+            case '^':
+                return 5;
+            case '*':
+            case '/':
+                return 3;
+            case '+':
+            case '-':
+                return 1;
+            default:
+                return 0;
+        }
+    }
+}
+
+/*class Solution {
+    // Function to convert an infix expression to a postfix expression.
+   public static String infixToPostfix(String exp) {
+       // to convert the given expression from infix to postfix expression
+       StringBuilder s1=new StringBuilder();
+       Stack<Character> s2=new Stack<>();
+       int i=0;
+       int n=exp.length();
+      while(i<n){
+          if((exp.charAt(i)>='a' && exp.charAt(i)<='z') || (exp.charAt(i)>='A' && exp.charAt(i)<='Z')){
+              s1.append(exp.charAt(i));
+          }
+          else if(exp.charAt(i)=='('){
+              s2.push(exp.charAt(i));
+          }
+          else if(exp.charAt(i)==')'){
+              while(!s2.isEmpty() && s2.peek()!='('){
+                  s1.append(s2.peek());
+                  s2.pop();
+              }
+               if(!s2.isEmpty()){
+                   s2.pop();
+               }
+             
+          }
+          else{
+              if((s2.isEmpty()) || ass(exp.charAt(i))>ass(s2.peek())){
+                  s2.push(exp.charAt(i));
+              }
+              else{
+              while((!s2.isEmpty()) && ass(exp.charAt(i))<=ass(s2.peek())){
+                  s1.append(s2.peek());
+                  s2.pop();
+              }
+              s2.push(exp.charAt(i));
+              }
+          }
+          i++;
+      }
+      while(!s2.isEmpty()){
+          s1.append(s2.peek());
+          s2.pop();
+      }
+        return s1.toString();
+      
+       
+    }
+   static int ass(char c) {
+        switch (c) {
+            case '^':
+                return 5;
+            case '*':
+            case '/':
+                return 3;
+            case '+':
+            case '-':
+                return 1;
+            default:
+                return 0;
+        }        
+    }
+}
+*/

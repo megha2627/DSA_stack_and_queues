@@ -1,0 +1,43 @@
+You are given a string S of size N that represents the prefix form of a valid mathematical expression. The string S contains only lowercase and uppercase alphabets as operands and the operators are +, -, *, /, %, and ^.Convert it to its infix form.
+
+
+
+
+// User function Template for Java
+
+
+
+class Solution {
+    // Function to convert an infix expression to a postfix expression.
+   public static String preToInfix(String pre_exp) {
+       Stack<String> s2 = new Stack<>();
+       StringBuilder s1=new StringBuilder(pre_exp);
+       s1.reverse();
+       s1.toString();
+        
+        // Step 2: Iterate through each character in the postfix expression
+        for (int i = 0; i < s1.length(); i++) {
+            char ch = s1.charAt(i);
+            
+            // Step 3: If operand, push it to the stack
+            if (Character.isLetter(ch)) {
+                s2.push(String.valueOf(ch));
+            }
+            // Step 4: If operator, pop two operands from the stack, combine them into an infix expression
+            else {
+                String op1 = s2.pop();  // Pop second operand
+                String op2 = s2.pop();  // Pop first operand
+                
+                // Step 5: Combine in the format "(operand1 operator operand2)"
+                String combined = "(" + op1 + ch + op2 + ")";
+                
+                // Step 6: Push the combined result back into the stack
+                s2.push(combined);
+            }
+        }
+        
+        // Step 7: The final result is the only element left in the stack
+        return s2.pop();
+      
+    }
+}
